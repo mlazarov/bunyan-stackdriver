@@ -19,8 +19,7 @@ npm install bunyan-stackdriver
 ## Setup
 
 1. Enable [Google Cloud Logging API](https://console.cloud.google.com/apis/api/logging.googleapis.com/overview) in your Google Developer Console.
-2. [Create a new Client ID](https://console.cloud.google.com/apis/credentials) for a Service Account (JSON Key) and download it.
-3. Start using `bunyan-stackdriver` to create log your messages
+1. Start using `bunyan-stackdriver` to create log your messages
 
 ## Basic usage
 
@@ -31,54 +30,48 @@ var bunyan  = require("bunyan"),
 
 log = bunyan.createLogger({
     name: "myApp",
-    stream: new BunyanStackDriver({
-      authJSON: require("./your-JSON-key.json"),
-      project: "your_project_id",
-      log_id: "default"
-    }),
+    streams: [{
+      type: "raw", // faster; makes Bunyan send objects instead of stringifying messages
+      new BunyanStackDriver({
+        projectId: "your_project_id"
+      })
+    }],
     level: "error"
 });
 
 log.error("hello bunyan user");
 ```
 
-You can also pass an optional error handler.
+## Full options
 
 ```javascript
 new BunyanStackDriver({
-  authJSON: require("./your-JSON-key.json"),
-  project: "your_project_id",
-  log_id: "default"
-}, function(error){
-  console.log(error);
-});
+  keyFilename: "/path/to/keyfile.json",
+  logName: "logname",
+  projectId: "project-id",
+  writeInterval: 500, // ms
+  resource: {
+    type: "resource_type",
+    labels: {key1: value1}
+  }
+}, function errorCallback(err) { console.log(err); });
 ```
 
-##Custom Formatters
+* If you are running on Google Cloud Platform, authentication will be taken care of automatically. If you're running elsewhere, or wish to provide alternative authentication, you can specify the `keyFilename` pointing to a service account JSON key.
 
-By default the logs are formatted like so: `[LOG_LEVEL] message`, unless you specify a `customFormatter` function.
+* logName. Must be less than 512 characters and include only alphanumeric characters, forward-slash, underscore, hyphen and period.
 
-```javascript
-log = bunyan.createLogger({
-  name: "myApp",
-  stream: new BunyanStackDriver({
-    authJSON: require("./your-JSON-key.json"),
-    project: "your_project_id",
-    log_id: "default"
-    customFormatter: function(record, levelName){
-      return {text: "[" + levelName + "] " + record.msg }
-    }
-  }),
-  level: "error"
-});
-```
+* projectId. The id of the project.
+
+* writeInterval. Specifies the maximum write frequency. Messages will be batched between writes to avoid exceeding API rate limits. (The default GCP limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
+
+* resource. See https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/MonitoredResource.
+
+* errorCallback. Will report errors during the logging process itself:
 
 ## Links
 
 [Stackdriver Logging - Method entries.write](https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/entries/write)
-
-[Google Cloud Logging API beta nodejs client source code](https://github.com/google/google-api-nodejs-client/blob/master/apis/logging/v2beta1.js)
-
 
 ## License
 
