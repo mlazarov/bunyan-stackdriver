@@ -4,11 +4,12 @@ var bunyan  = require("bunyan"),
 
 log = bunyan.createLogger({
     name: "myApp",
-    stream: new BunyanStackDriver({
-      authJSON: require("./your-JSON-key.json"),
-      project: "your_project_id",
-      log_id: "default"
-    }),
+    streams: [{
+      type: "raw",
+      new BunyanStackDriver({
+        projectId: "your_project_id"
+      })
+    }],
     level: "error"
 });
 
