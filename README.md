@@ -61,13 +61,17 @@ new BunyanStackDriver({
 
 * logName. Must be less than 512 characters and include only alphanumeric characters, forward-slash, underscore, hyphen and period.
 
-* projectId. The id of the project.
+* projectId. The id of the project. This can be omitted if the environment variable "GCLOUD_PROJECT" is set.
 
 * writeInterval. Specifies the maximum write frequency. Messages will be batched between writes to avoid exceeding API rate limits. (The default GCP limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
 
 * resource. See https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/MonitoredResource.
 
 * errorCallback. Will report errors during the logging process itself:
+
+## Known issues
+
+* Circular objects will cause a stack overflow. For now, you can not use the `type: "raw"` setting; Bunyan's stringifier will remove circular references then.
 
 ## Links
 
