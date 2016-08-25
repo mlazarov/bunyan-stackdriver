@@ -1,6 +1,6 @@
 {
   "name": "bunyan-stackdriver",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "StackDriver stream for Bunyan",
   "main": "./lib/bunyan-stackdriver",
   "repository": {
@@ -21,13 +21,14 @@
   },
   "homepage": "https://github.com/mlazarov/bunyan-stackdriver",
   "dependencies": {
-    "gcloud": "^0.34.0"
+    "@google-cloud/logging": "^0.1.1"
   },
   "devDependencies": {
     "bunyan": "^1.3.3"
   },
   "maintainers": [
-    "mlazarov <martin@lazarov.bg>"
+    "mlazarov <martin@lazarov.bg>",
+    "zbjornson <zbbjornson@gmail.com>"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

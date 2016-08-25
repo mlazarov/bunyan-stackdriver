@@ -6,7 +6,7 @@ log = bunyan.createLogger({
     name: "myApp",
     streams: [{
       type: "raw",
-      new BunyanStackDriver({
+      stream: new BunyanStackDriver({
         projectId: "your_project_id"
       })
     }],

@@ -4,35 +4,30 @@
 
 ## Installation
 
-First install bunyan...
+Install bunyan and bunyan-stackdriver...
 
 ```bash
-npm install bunyan
-```
-
-Then install bunyan-stackdriver
-
-```bash
-npm install bunyan-stackdriver
+npm install bunyan bunyan-stackdriver
 ```
 
 ## Setup
 
-1. Enable [Google Cloud Logging API](https://console.cloud.google.com/apis/api/logging.googleapis.com/overview) in your Google Developer Console.
+1. Enable [Google Cloud Logging API](https://console.cloud.google.com/apis/api/logging.googleapis.com/overview)
+in your Google Developer Console.
 1. Start using `bunyan-stackdriver` to create log your messages
 
 ## Basic usage
 
 ```javascript
 var bunyan  = require("bunyan"),
-    BunyanStackDriver = require('bunyan-stackdriver'),
+    BunyanStackDriver = require("bunyan-stackdriver"),
     log;
 
 log = bunyan.createLogger({
     name: "myApp",
     streams: [{
       type: "raw", // faster; makes Bunyan send objects instead of stringifying messages
-      new BunyanStackDriver({
+      stream: new BunyanStackDriver({
         projectId: "your_project_id"
       })
     }],
@@ -57,21 +52,31 @@ new BunyanStackDriver({
 }, function errorCallback(err) { console.log(err); });
 ```
 
-* If you are running on Google Cloud Platform, authentication will be taken care of automatically. If you're running elsewhere, or wish to provide alternative authentication, you can specify the `keyFilename` pointing to a service account JSON key.
+* If you are running on Google Cloud Platform, authentication will be taken
+care of automatically. If you're running elsewhere, or wish to provide
+alternative authentication, you can specify the `keyFilename` pointing to a
+service account JSON key.
 
-* logName. Must be less than 512 characters and include only alphanumeric characters, forward-slash, underscore, hyphen and period.
+* logName. Must be less than 512 characters and include only alphanumeric
+characters, forward-slash, underscore, hyphen and period.
 
-* projectId. The id of the project. This can be omitted if the environment variable "GCLOUD_PROJECT" is set.
+* projectId. The id of the project. This can be omitted if the environment
+variable "GCLOUD_PROJECT" is set.
 
-* writeInterval. Specifies the maximum write frequency. Messages will be batched between writes to avoid exceeding API rate limits. (The default GCP limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
+* writeInterval. Specifies the maximum write frequency. Messages will be
+batched between writes to avoid exceeding API rate limits. (The default GCP
+limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
 
 * resource. See https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/MonitoredResource.
 
-* errorCallback. Will report errors during the logging process itself:
+* errorCallback. Will report errors during the logging process itself.
 
 ## Known issues
 
-* Circular objects will cause a stack overflow. For now, you can not use the `type: "raw"` setting; Bunyan's stringifier will remove circular references then.
+* Circular objects will cause a stack overflow. If you need to log object with
+circular references, either (a) preprocess them to remove the circles, or (b)
+do not use the `type: "raw"` setting and instead let Bunyan's stringifier
+remove circular references.
 
 ## Links
 
