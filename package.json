@@ -1,6 +1,6 @@
 {
   "name": "bunyan-stackdriver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "StackDriver stream for Bunyan",
   "main": "./lib/bunyan-stackdriver",
   "repository": {
