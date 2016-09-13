@@ -41,7 +41,10 @@ log.error("hello bunyan user");
 
 ```javascript
 new BunyanStackDriver({
+  // The path to your key file:
   keyFilename: "/path/to/keyfile.json",
+  // Or the contents of the key file:
+  credentials: require('./path/to/keyfile.json'),
   logName: "logname",
   projectId: "project-id",
   writeInterval: 500, // ms
