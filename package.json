@@ -1,6 +1,6 @@
 {
   "name": "bunyan-stackdriver",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "StackDriver stream for Bunyan",
   "main": "./lib/bunyan-stackdriver",
   "repository": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/mlazarov/bunyan-stackdriver",
   "dependencies": {
-    "@google-cloud/logging": "^0.1.1",
+    "@google-cloud/logging": "^0.5.0",
     "destroy-circular": "^1.1.0"
   },
   "devDependencies": {
