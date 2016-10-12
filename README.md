@@ -74,13 +74,6 @@ limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
 
 * errorCallback. Will report errors during the logging process itself.
 
-## Known issues
-
-* Circular objects will cause a stack overflow. If you need to log object with
-circular references, either (a) preprocess them to remove the circles, or (b)
-do not use the `type: "raw"` setting and instead let Bunyan's stringifier
-remove circular references.
-
 ## Links
 
 [Stackdriver Logging - Method entries.write](https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/entries/write)
