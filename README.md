@@ -74,6 +74,24 @@ limit is 20 RPS. The default setting for BunyanStackDriver is 500 ms.)
 
 * errorCallback. Will report errors during the logging process itself.
 
+## Stackdriver Error Reporting
+
+When errors with stack traces are logged - `bunyan.error(new Error('message'))` - these can automatically be captured by the [Error Reporting](https://cloud.google.com/error-reporting/) interface in Google Cloud Platform. To do so some additional configuration is required as per [Stackdriver Formatting Error Messages](https://cloud.google.com/error-reporting/docs/formatting-error-messages)
+
+When logging, a _service context_ is required. This can be added on a per log basis or configured for all logs during logger creation like so:
+
+```
+const logger = bunyan.createLogger({
+    name: 'Example',
+    serializers: ...
+    streams: ...,
+    serviceContext: {
+        service: 'example',
+        version: 'x.x.x'
+    }
+});
+```
+
 ## Links
 
 [Stackdriver Logging - Method entries.write](https://cloud.google.com/logging/docs/api/ref_v2beta1/rest/v2beta1/entries/write)
