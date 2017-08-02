@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/mlazarov/bunyan-stackdriver",
   "dependencies": {
-    "@google-cloud/logging": "^0.7.0",
+    "@google-cloud/logging": "^1.0.4",
     "destroy-circular": "^1.1.0"
   },
   "devDependencies": {

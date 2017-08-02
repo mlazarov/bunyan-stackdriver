@@ -1,6 +1,8 @@
 # bunyan-stackdriver
 
-**Bunyan stream for StackDriver (Google Cloud Logging API) integration**
+Bunyan stream for StackDriver (Google Cloud Logging API) integration.
+
+**:exclamation: Google Cloud now has an official Bunyan logging transport that should be preferred over this library: https://github.com/GoogleCloudPlatform/google-cloud-node/tree/master/packages/logging-bunyan**
 
 ## Installation
 
